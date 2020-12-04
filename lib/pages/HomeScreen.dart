@@ -16,7 +16,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: RaisedButton(
           child: Text('test'),
           onPressed: () {
-            Navigator.pushNamed(context, '/location');
+            Future.delayed(Duration(seconds: 3), () {
+              Navigator.pushNamed(context, '/location');
+            });
           },
         ),
       ),
