@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:world_time_app/pages/HomeScreen.dart';
 import 'package:world_time_app/pages/Location.dart';
 import 'package:world_time_app/services/world_time.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 void main() {
@@ -23,14 +24,17 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
 
   int counter = 0;
-  String time = 'Loading';
 
   void setUpWorldTime() async {
     WorldTime instance = WorldTime(location:'Berlin', url:'Europe/berlin', flag:'berlin.png');
+    await Future.delayed(Duration(seconds: 2));
     await instance.getData();
     // print(instance.time);
-    setState(() {
-      time = instance.time;
+    Navigator.pushReplacementNamed(context, '/home', arguments: {
+      'location': instance.location,
+      'flag': instance.flag,
+      'time': instance.time,
+      'isDayTime': instance.isDayTime,
     });
   }
 
@@ -43,50 +47,59 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(time),
-      ),
+      backgroundColor: Colors.blue,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SelectableText(
-              'you tapped $counter times!',
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-            SizedBox(height: 20,),
-            RaisedButton(
-              color: Colors.red,
-              child: Text(
-                'count',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: () {
-                setState(() {
-                  counter++;
-                });
-              },
-            ),
-            SizedBox(height: 20,),
-            RaisedButton(
-              color: Colors.amber,
-              child: Text(
-                'test',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-            ),
-          ],
+        child: SpinKitFoldingCube(
+          color: Colors.white,
+          size: 50.0,
         ),
       ),
     );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('Loading'),
+    //   ),
+    //   body: Center(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         SelectableText(
+    //           'you tapped $counter times!',
+    //           style: TextStyle(
+    //             fontSize: 30,
+    //           ),
+    //         ),
+    //         SizedBox(height: 20,),
+    //         RaisedButton(
+    //           color: Colors.red,
+    //           child: Text(
+    //             'count',
+    //             style: TextStyle(
+    //               color: Colors.white,
+    //             ),
+    //           ),
+    //           onPressed: () {
+    //             setState(() {
+    //               counter++;
+    //             });
+    //           },
+    //         ),
+    //         SizedBox(height: 20,),
+    //         RaisedButton(
+    //           color: Colors.amber,
+    //           child: Text(
+    //             'test',
+    //             style: TextStyle(
+    //               color: Colors.white,
+    //             ),
+    //           ),
+    //           onPressed: () {
+    //             // Navigator.pushNamed(context, '/home');
+    //           },
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

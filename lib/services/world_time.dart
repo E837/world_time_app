@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class WorldTime {
 
@@ -7,6 +8,7 @@ class WorldTime {
   String url;
   String time;
   String flag;
+  bool isDayTime = true;// if network failed so it can run with a default value(null safety)
 
   WorldTime ({this.location, this.url, this.flag});
 
@@ -23,8 +25,13 @@ class WorldTime {
 
       DateTime now = DateTime.parse(dateTime);
       now = now.add(Duration(hours: int.parse(offset)));
+
+      isDayTime = now.hour > 6 && now.hour < 20? true : false;
+      //simplified=> isDayTime = now.hour > 6 && now.hour < 20;
+      //because the right side of the equation returns true or false by itself
+
+      time = DateFormat.jm().format(now);
       // print(now);
-      time = now.toString();
     }
     catch (e) {
       print('the problem is: $e');
