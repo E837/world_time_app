@@ -13,7 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 
     data = data.isNotEmpty? data : ModalRoute.of(context).settings.arguments;
-    // print(data);
+    print(data);
 
     String bgImage = data['isDayTime']? 'day.png': 'night.png';
     Color textColor = data['isDayTime']? Colors.black: Colors.white;

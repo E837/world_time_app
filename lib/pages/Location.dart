@@ -43,8 +43,9 @@ class _LocationState extends State<Location> {
         itemCount: locations.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 1, horizontal: 40),
             child: Card(
+              color: Colors.amberAccent[200],
               child: ListTile(
                 onTap: () {
                   updateTime(index);
